@@ -4,9 +4,10 @@
   "description": "server app for rn-fc",
   "main": "index.js",
   "scripts": {
-    "start": "cd server && node index.js",
-    "server": "cd server && nodemon index.js",
-    "dev": "cd server && nodemon index.js"
+    "dev": "nodemon server/index.js",
+    "start": "node server/index.js",
+    "build": "npm install && npm run build --prefix server",
+    "heroku-postbuild": "npm install --prefix server && npm run build --prefix server"
   },
   "keywords": [
     "express",
