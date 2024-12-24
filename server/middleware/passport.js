@@ -1,5 +1,5 @@
-const { JWT_KEY } = require("../../config/keys");
-//const JWT_KEY = process.env.JWT_KEY;
+//const { JWT_KEY } = require("../../config/keys");
+const JWT_KEY = process.env.JWT_KEY;
 const User = require("../models/User");
 
 const JWTStrategy = require("passport-jwt").Strategy;
