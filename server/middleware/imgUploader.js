@@ -4,7 +4,7 @@ const path = require("path");
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, process.env.PWD + "./uploads/");
+    cb(null, process.env.PWD + "/uploads/");
   },
   filename(req, file, cb) {
     const date = moment().format("DDDMMYYYY-HHmmss_SSS");
