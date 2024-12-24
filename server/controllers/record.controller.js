@@ -25,8 +25,13 @@ module.exports.newRecord = async (req, res) => {
     });
 
     if (existingRecord) {
-      if (file?.path)
-        existingRecord.imgsrc = file?.path.match(/(?<=src\/).*/)[0];
+      if (file?.path) {
+        console.log("error poto match");
+        const match = file.path.match(/(?<=src\/).*/);
+        if (match) {
+          existingRecord.imgsrc = match[0];
+        }
+      }
       existingRecord.description = data.description;
       existingRecord.mintemp = data.mintemp;
       existingRecord.maxtemp = data.maxtemp;
@@ -42,7 +47,7 @@ module.exports.newRecord = async (req, res) => {
 
     const record = new Record({
       user: user.id,
-      imgsrc: file?.path.match(/(?<=src\/).*/)[0] || "",
+      imgsrc: file?.path ? file.path.match(/(?<=src\/).*/)[0] : "",
       description: data.description,
       mintemp: data.mintemp,
       maxtemp: data.maxtemp,
