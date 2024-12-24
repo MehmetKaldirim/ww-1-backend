@@ -10,7 +10,8 @@ const { MONGO_URI } = require("../config/keys");
 const app = express();
 
 mongoose
-  .connect(process.env.MONGO_URI)
+  //.connect(process.env.MONGO_URI)
+  .connect(MONGO_URI)
   .then(() => console.log("DB connected"))
   .catch((e) => console.log(e));
 
