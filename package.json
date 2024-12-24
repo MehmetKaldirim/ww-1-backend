@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "nodemon server/index.js",
     "start": "node server/index.js",
-    "build": "npm install && npm run build",
-    "heroku-postbuild": "npm install && npm run build"
+    "build": "npm install",
+    "heroku-postbuild": "npm install"
   },
   "keywords": [
     "express",
