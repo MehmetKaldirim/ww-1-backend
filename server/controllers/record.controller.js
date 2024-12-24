@@ -42,7 +42,7 @@ module.exports.newRecord = async (req, res) => {
 
     const record = new Record({
       user: user.id,
-      imgSrc: file?.path.match(/(?<=src\/).*/)[0] || "",
+      imgsrc: file?.path.match(/(?<=src\/).*/)[0] || "",
       description: data.description,
       mintemp: data.mintemp,
       maxtemp: data.maxtemp,
@@ -77,7 +77,7 @@ module.exports.updRecord = async (req, res) => {
   };
 
   if (req.file) {
-    updated[imgSrc] = req.file.path;
+    updated[imgsrc] = req.file.path;
   }
 
   try {
