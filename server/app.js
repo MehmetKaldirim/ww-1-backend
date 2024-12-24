@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
+const path = require("path");
+
 const recordRoutes = require("./routes/record");
 //const { MONGO_URI } = require("../config/keys");
 const app = express();
@@ -21,7 +23,7 @@ require("./middleware/passport")(passport);
 app.use(morgan("dev"));
 app.use(require("cors")());
 
-app.use("/server/uploads", express.static(process.env.PWD + "/uploads/"));
+app.use("/server/uploads", express.static(path.join(__dirname, "uploads"))); // Path'i doğru şekilde birleştir
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

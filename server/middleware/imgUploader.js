@@ -1,10 +1,17 @@
 const multer = require("multer");
 const moment = require("moment");
 const path = require("path");
+const fs = require("fs");
+
+// Upload dizininin doğru şekilde oluşturulması
+const uploadDir = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true }); // Yolu ve dizini oluştur
+}
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, process.env.PWD + "/uploads/");
+    cb(null, uploadDir); // Burada uploads dizin yolunu doğru şekilde tanımladık
   },
   filename(req, file, cb) {
     const date = moment().format("DDDMMYYYY-HHmmss_SSS");
@@ -21,7 +28,7 @@ const fileFilter = (req, file, cb) => {
 };
 
 const limits = {
-  fileSize: 1024 * 1024 * 5,
+  fileSize: 1024 * 1024 * 5, // 5MB dosya sınırı
 };
 
 module.exports = multer({
