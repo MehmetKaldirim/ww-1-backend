@@ -26,7 +26,8 @@ module.exports.newRecord = async (req, res) => {
 
     if (existingRecord) {
       if (file?.path) {
-        console.log("error poto match");
+        console.log("File path:", file?.path); // Log the file path
+        console.log("Image source in record:", existingRecord.imgsrc);
         const match = file.path.match(/(?<=src\/).*/);
         if (match) {
           existingRecord.imgsrc = match[0];
@@ -55,6 +56,8 @@ module.exports.newRecord = async (req, res) => {
       weatherData: data.weatherData,
     });
 
+    console.log("File path new :", file?.path); // Log the file path
+    console.log("Image source in record new:", existingRecord.imgsrc);
     await record.save();
     return res.status(201).json({
       data: record,
