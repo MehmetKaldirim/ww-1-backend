@@ -23,7 +23,8 @@ module.exports.newRecord = async (req, res) => {
     });
     let imgsrcValue; // imgsrc için değişken tanımla
 
-    if (file && file.path) { // file ve path'in varlığını kontrol et
+    if (file && file.path) {
+      // file ve path'in varlığını kontrol et
       const match = file.path.match(/(?<=src\/).*/);
       imgsrcValue = match ? match[0] : "./../uploads/placeHolderImg.png"; // Eşleşme yoksa varsayılan değer
     } else {
@@ -61,19 +62,7 @@ module.exports.newRecord = async (req, res) => {
     errorHendler(res, e);
   }
 };
-
-    console.log("File path new :", file?.path); // Log the file path
-    console.log("Image source in record new:", existingRecord.imgsrc);
-    await record.save();
-    return res.status(201).json({
-      data: record,
-      message: "Record was created!",
-    });
-  } catch (e) {
-    console.error("Error saving record:", e);
-    errorHendler(res, e);
-  }
-};
+Ì;
 
 module.exports.getById = async (req, res) => {
   try {
