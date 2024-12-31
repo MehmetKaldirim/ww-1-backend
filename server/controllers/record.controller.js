@@ -48,7 +48,9 @@ module.exports.newRecord = async (req, res) => {
 
     const record = new Record({
       user: user.id,
-      imgsrc: file?.path ? file.path.match(/(?<=src\/).*/)[0] : "",
+      imgsrc: file?.path
+        ? file.path.match(/(?<=src\/).*/)[0]
+        : "./../uploads/placeHolderImg.png",
       description: data.description,
       mintemp: data.mintemp,
       maxtemp: data.maxtemp,
