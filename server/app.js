@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const path = require("path");
 
-const recordRoutes = require("./routes/record");
+const recordRoutes = require("./routes/ohnerecord");
 //const { MONGO_URI } = require("../config/keys");
 const app = express();
 
