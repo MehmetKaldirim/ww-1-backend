@@ -13,50 +13,54 @@ module.exports.getAll = async (req, res) => {
 
 module.exports.newRecord = async (req, res) => {
   const { user, body, file } = req;
-
   const data = req.file ? JSON.parse(body.data) : body;
-
-  console.log("Request file:", req.file); // Logs file details
+  console.log("Request file:", req.file);
   console.log("Request body:", req.body);
   try {
     const existingRecord = await Record.findOne({
       user: user.id,
       date: { $gte: new Date().setHours(0, 0, 0, 0) },
     });
+    let imgsrcValue; // imgsrc için değişken tanımla
 
+    if (file && file.path) { // file ve path'in varlığını kontrol et
+      const match = file.path.match(/(?<=src\/).*/);
+      imgsrcValue = match ? match[0] : "./../uploads/placeHolderImg.png"; // Eşleşme yoksa varsayılan değer
+    } else {
+      imgsrcValue = "./../uploads/placeHolderImg.png"; // file yoksa varsayılan değer
+    }
     if (existingRecord) {
-      if (file?.path) {
-        console.log("File path:", file?.path); // Log the file path
-        console.log("Image source in record:", existingRecord.imgsrc);
-        const match = file.path.match(/(?<=src\/).*/);
-        if (match) {
-          existingRecord.imgsrc = match[0];
-        }
-      }
       existingRecord.description = data.description;
       existingRecord.mintemp = data.mintemp;
       existingRecord.maxtemp = data.maxtemp;
       existingRecord.wind = data.wind;
       existingRecord.weatherData = data.weatherData;
-
+      existingRecord.imgsrc = imgsrcValue; // imgsrc değerini ata
       await existingRecord.save();
       return res.status(200).json({
         data: existingRecord,
         message: "Record was updated!",
       });
     }
-
     const record = new Record({
       user: user.id,
-      imgsrc: file?.path
-        ? file.path.match(/(?<=src\/).*/)[0]
-        : "./../uploads/placeHolderImg.png",
+      imgsrc: imgsrcValue, // imgsrc değerini ata
       description: data.description,
       mintemp: data.mintemp,
       maxtemp: data.maxtemp,
       wind: data.wind,
       weatherData: data.weatherData,
     });
+    await record.save();
+    return res.status(201).json({
+      data: record,
+      message: "Record was created!",
+    });
+  } catch (e) {
+    console.error("Error saving record:", e);
+    errorHendler(res, e);
+  }
+};
 
     console.log("File path new :", file?.path); // Log the file path
     console.log("Image source in record new:", existingRecord.imgsrc);
