@@ -62,7 +62,6 @@ module.exports.newRecord = async (req, res) => {
     errorHendler(res, e);
   }
 };
-Ì;
 
 module.exports.getById = async (req, res) => {
   try {
