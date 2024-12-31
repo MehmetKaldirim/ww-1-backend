@@ -31,8 +31,8 @@ module.exports.newRecord = async (req, res) => {
 
     if (file && file.path) {
       console.log("[newRecord] File exists, extracting path:", file.path);
-      const match = file.path.match(/(?<=src\/).*/);
-      imgsrcValue = match ? match[0] : "./../uploads/placeHolderImg.png"; // Default value if no match
+      const match = file.path.match(/\/uploads\/(.*)/); // Capture path after /uploads/
+      imgsrcValue = match ? match[1] : "./../uploads/placeHolderImg.png";
       console.log("[newRecord] Image source set to:", imgsrcValue);
     } else {
       imgsrcValue = "./../uploads/placeHolderImg.png"; // Default value if no file
