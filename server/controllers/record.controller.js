@@ -1,6 +1,23 @@
 const errorHendler = require("../utils/errorHendler");
 const Record = require("../models/Record");
 
+module.exports.getImage = async (req, res) => {
+  try {
+    const filePath = `./server/middleware/uploads/${req.params.filename}`; // Dosya yolu
+    res.sendFile(filePath, { root: "." }, (err) => {
+      if (err) {
+        console.error("[getImage] Error sending file:", err);
+        res.status(404).json({ message: "Image not found" });
+      } else {
+        console.log("[getImage] File sent successfully:", filePath);
+      }
+    });
+  } catch (e) {
+    console.error("[getImage] Error:", e);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 module.exports.getAll = async (req, res) => {
   try {
     console.log("[getAll] Fetching all records for user:", req.user.id);
